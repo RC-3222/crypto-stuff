@@ -1,0 +1,10 @@
+@mixin button-color($color, $darken-amount) {
+    background-color: $color;
+    border-color: $color;
+
+    &:hover,
+    &:active {
+        background-color: darken($color, $darken-amount);
+        border-color: darken($color, $darken-amount);
+    }
+}

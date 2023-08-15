@@ -1,0 +1,36 @@
+@use './scss/variables' as *;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  overflow-x: hidden;
+}
+
+html {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  color: $clr--black;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*::-webkit-scrollbar {
+  background: transparent;
+  width: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(88, 88, 88, 0.8);
+  border-radius: 4px;
+}
+
