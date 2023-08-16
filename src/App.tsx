@@ -1,21 +1,24 @@
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 
-import { RoutePath } from './enums';
+import { RoutePath } from './enums'
 
-import { MainPage } from './pages/main-page';
-import { InfoPage } from './pages/info-page';
-import { GeneralLayout } from './components/general-layout';
+import { MainPage } from './pages/main-page'
+import { InfoPage } from './pages/info-page'
+import { GeneralLayout } from './components/general-layout'
 
-function App() {
-    return <HashRouter>
-        <Routes>
-            <Route element={<GeneralLayout />}>
-                <Route path={RoutePath.main} element={<MainPage />} />
-                <Route path={RoutePath.coinInfo} element={<InfoPage />} />
-                <Route path={RoutePath.fallback} element={<Navigate to={RoutePath.main} />} />
-            </Route>
-        </Routes>
-    </HashRouter>
+export const App = () => {
+    return (
+        <HashRouter>
+            <Routes>
+                <Route element={<GeneralLayout />}>
+                    <Route path={RoutePath.main} element={<MainPage />} />
+                    <Route path={RoutePath.coinInfo} element={<InfoPage />} />
+                    <Route
+                        path={RoutePath.fallback}
+                        element={<Navigate to={RoutePath.main} />}
+                    />
+                </Route>
+            </Routes>
+        </HashRouter>
+    )
 }
-
-export default App;

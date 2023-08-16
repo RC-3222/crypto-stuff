@@ -9,6 +9,8 @@
     padding: 8px 16px;
     vertical-align: middle;
     white-space: nowrap;
-    transition: background-color 250ms ease-in-out, border-color 250ms;
+    transition:
+        background-color 250ms ease-in-out,
+        border-color 250ms;
     @include button-color($clr--green, 10%);
 }

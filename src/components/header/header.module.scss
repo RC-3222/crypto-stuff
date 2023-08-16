@@ -8,52 +8,76 @@
     gap: min(3rem, 6%);
     border-bottom: 2px solid currentColor;
 
-    @media (max-width:490px) {
+    @media (max-width: 490px) {
         flex-direction: column;
-        
+
         gap: 1.5rem;
+
         & > * {
             width: 95%;
         }
     }
 }
 
+.topCoinBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: min(450px, 50%);
+    gap: 1rem;
+
+    & > span:first-child {
+        border-bottom: 1px solid currentColor;
+        font-weight: 500;
+    }
+}
+
 .topCoin {
-    font-weight: 500;
-    border-bottom: 1px solid currentColor;
+    font-weight: 400;
+    //border-bottom: 1px solid currentColor;
 
     &#{Container} {
         display: flex;
-        width: min(450px, 50%);
+        width: 100%;
+        //width: min(450px, 50%);
         gap: min(1rem, 3%);
         flex-wrap: wrap;
-    
+
         font-size: 0.9rem;
-    
+
         align-items: center;
         justify-content: center;
     }
 }
 
-.PortfolioContainer {
+.portfolioBlock {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
     align-items: center;
     justify-content: center;
-}
 
-.PortfolioLabelsContainer {
-    gap: 0.6rem;
+    &__labels {
+        gap: 0.6rem;
 
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
 
-    & > span:first-child {
-        border-bottom: 1px solid currentColor;
-        font-weight:500
+        & > span:first-child {
+            border-bottom: 1px solid currentColor;
+            font-weight: 500;
+        }
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: min(1rem, 5%);
     }
 }

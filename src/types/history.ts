@@ -1,5 +1,5 @@
 export type HistoryItem = {
-    priceUsd: string,
-    time: number,
+    priceUsd: string
+    time: number
     date: string
 }
