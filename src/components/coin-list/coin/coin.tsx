@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { CoinInfo } from '../../types'
+import { CoinInfo } from '../../../types'
 
 import styles from './coin.module.scss'
-import { Button } from '../common/button'
-import { AddCoinMenu } from '../menus/addCoinMenu'
+import { Button } from '../../common/button'
+import { AddCoinMenu } from '../../menus/addCoinMenu'
 import { useState } from 'react'
 
 type CoinProps = {

@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { TOP_SIZE } from '../../constants'
-import { CoinInfo, PortfolioItem } from '../../types'
+import { TOP_SIZE } from '../../../constants'
+import { CoinInfo, PortfolioItem } from '../../../types'
 
 import styles from './header.module.scss'
-import { Button } from '../common/button'
-import { ViewPorfolioMenu } from '../menus/viewPortfolioMenu'
+import { Button } from '../../common/button'
+import { ViewPorfolioMenu } from '../../menus/viewPortfolioMenu'
 
-import { PortfolioContext } from '../../context'
+import { ActionType, PortfolioContext } from '../../../context'
 
 export const Header = () => {
     const [topCoins, setTopCoins] = useState<CoinInfo[]>()
@@ -54,9 +54,8 @@ export const Header = () => {
                 <ul className={styles.topCoinContainer}>
                     {topCoins &&
                         topCoins.map((item) => (
-                            <li className={styles.topCoin} key={item.id}>{`${
-                                item.name
-                            } - ${(+item.priceUsd).toFixed(2)} USD`}</li>
+                            <li className={styles.topCoin} key={item.id}>{`${item.name
+                                } - ${(+item.priceUsd).toFixed(2)} USD`}</li>
                         ))}
                 </ul>
             </div>
@@ -64,7 +63,7 @@ export const Header = () => {
                 <div className={styles.portfolioBlock__labels}>
                     <span>Portfolio Info</span>
                     <span>
-                        {prevPrice.toFixed(2)} USD
+                        {currPrice.toFixed(2)} USD
                         {deltaValue !== 0 &&
                             ` ${deltaValue > 0 ? '+' : '-'} ${Math.abs(
                                 deltaValue
@@ -77,7 +76,7 @@ export const Header = () => {
                     </Button>
                     <Button
                         onClick={() =>
-                            context.dispatch({ type: 'updatePortfolio' })
+                            context.dispatch({ type: ActionType.UpdatePortfolio })
                         }
                     >
                         Update

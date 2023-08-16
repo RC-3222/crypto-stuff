@@ -4,7 +4,7 @@ import React, {
     useEffect,
     useReducer,
 } from 'react'
-import { PortfolioReducer } from './reducer'
+import { ActionType, PortfolioReducer } from './reducer'
 import { PortfolioItem } from '../../types'
 import { getPrevState, getCurrState } from '.'
 
@@ -30,8 +30,7 @@ export const PortfolioContextProvider = ({ children }: PropsWithChildren) => {
         const { prevState } = getPrevState()
         const { currState } = await getCurrState(prevState)
 
-        dispatch({ type: 'setCurrPortfolio', payload: currState })
-        dispatch({ type: 'setPrevPortfolio', payload: prevState })
+        dispatch({ type: ActionType.Init, payload: { currState, prevState } })
     }
 
     useEffect(() => {

@@ -4,7 +4,7 @@ import { Button } from '../../common/button'
 import { CoinInfo } from '../../../types'
 
 import styles from './add-coin.module.scss'
-import { PortfolioContext } from '../../../context'
+import { ActionType, PortfolioContext } from '../../../context'
 
 type AddCoinMenuProps = {
     onHide: () => void
@@ -23,7 +23,7 @@ export const AddCoinMenu = ({ onHide, coinToAdd }: AddCoinMenuProps) => {
         if (!numVal || numVal < 0) return
 
         context.dispatch({
-            type: 'addItem',
+            type: ActionType.AddItem,
             payload: {
                 id: coinToAdd.id,
                 name: coinToAdd.name,

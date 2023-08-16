@@ -35,3 +35,5 @@ export const getPrevState = () => {
     console.log(prevState)
     return { prevState }
 }
+
+export { ActionType } from './reducer'

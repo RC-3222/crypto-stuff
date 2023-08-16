@@ -1,5 +1,5 @@
 import { CoinInfo } from '../../types'
-import { Coin } from '../coin'
+import { Coin } from './coin'
 
 import styles from './coin-list.module.scss'
 

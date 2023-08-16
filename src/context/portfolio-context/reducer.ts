@@ -1,31 +1,30 @@
 import { PortfolioItem } from '../../types'
 
+export enum ActionType {
+    Init = 'Init',
+    UpdatePortfolio = 'updatePortfolio',
+    AddItem = 'addItem',
+    RemoveItem = 'addItem'
+}
+
 type Action = {
-    type:
-        | 'updatePortfolio'
-        | 'addItem'
-        | 'removeItem'
-        | 'setCurrPortfolio'
-        | 'setPrevPortfolio'
+    type: ActionType
     payload: any
 }
 
 export const PortfolioReducer = (state: any, action: Action) => {
     switch (action.type) {
-        case 'setCurrPortfolio': {
-            return { ...state, currState: action.payload }
+        case ActionType.Init: {
+            return { ...action.payload }
         }
-        case 'setPrevPortfolio': {
-            return { ...state, prevState: action.payload }
-        }
-        case 'updatePortfolio': {
+        case ActionType.UpdatePortfolio: {
             localStorage.setItem('prevState', JSON.stringify(state.currState))
             return {
                 currState: state.currState,
                 prevState: [...state.currState],
             }
         }
-        case 'addItem': {
+        case ActionType.AddItem: {
             let newState
 
             const existingItem = state.currState.find(
@@ -37,10 +36,10 @@ export const PortfolioReducer = (state: any, action: Action) => {
                 newState = state.currState.map((item: PortfolioItem) => {
                     return item === existingItem
                         ? {
-                              ...existingItem,
-                              priceUsd: action.payload.priceUsd,
-                              amount: item.amount + action.payload.amount,
-                          }
+                            ...existingItem,
+                            priceUsd: action.payload.priceUsd,
+                            amount: item.amount + action.payload.amount,
+                        }
                         : item
                 })
             }
@@ -49,7 +48,7 @@ export const PortfolioReducer = (state: any, action: Action) => {
             localStorage.setItem('prevState', JSON.stringify(newState))
             return { currState: [...newState], prevState: [...newState] }
         }
-        case 'removeItem': {
+        case ActionType.RemoveItem: {
             const currState = state.currState as PortfolioItem[]
             const neededItem = currState.find(
                 (item: PortfolioItem) => item.id === action.payload
@@ -57,7 +56,7 @@ export const PortfolioReducer = (state: any, action: Action) => {
 
             const newState = currState.filter((item) => item !== neededItem)
 
-            // since adding an item is also an update
+            // since removing an item is also an update
             localStorage.setItem('prevState', JSON.stringify(newState))
             return { currState: [...newState], prevState: [...newState] }
         }
