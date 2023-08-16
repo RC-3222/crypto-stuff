@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ActionType, PortfolioContext } from '../../../context'
+import { PortfolioContext } from '../../../context'
 import { Button } from '../../common/button'
 import { Modal } from '../../common/modal'
 
@@ -13,24 +13,22 @@ export const ViewPorfolioMenu = ({ onHide }: AddCoinMenuProps) => {
     const context = useContext(PortfolioContext)
 
     const removeItemHandler = (id: string) => {
-        context.dispatch({
-            type: ActionType.RemoveItem,
-            payload: id,
-        })
+        context.removeItem(id)
     }
 
     return (
         <Modal onHide={onHide}>
             <ul className={styles.list}>
-                {context.state.currState.map((item) => (
+                {context.currState.map((item) => (
                     <li key={item.id} className={styles.list__item}>
                         <div className={styles.item__info}>
                             <span className={styles.item__info__name}>
                                 {item.name}
                             </span>
                             <span className={styles.item__info__price}>
-                                {`${item.priceUsd.toFixed(2)} USD * ${item.amount
-                                    }`}
+                                {`${item.priceUsd.toFixed(2)} USD * ${
+                                    item.amount
+                                }`}
                             </span>
                         </div>
                         <Button onClick={() => removeItemHandler(item.id)}>

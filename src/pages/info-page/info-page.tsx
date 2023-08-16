@@ -19,7 +19,6 @@ export const InfoPage = () => {
         const { data: mainData } = await fetch(
             `https://api.coincap.io/v2/assets/${params.coinId}`
         ).then((res) => res.json())
-        console.log(mainData)
         setMainInfo(mainData)
 
         const { data: historyData } = await fetch(
@@ -30,6 +29,7 @@ export const InfoPage = () => {
 
     useEffect(() => {
         loadInfo()
+        // eslint-disable-next-line 
     }, [])
 
     return (

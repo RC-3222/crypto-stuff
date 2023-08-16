@@ -7,7 +7,7 @@ import styles from './header.module.scss'
 import { Button } from '../../common/button'
 import { ViewPorfolioMenu } from '../../menus/viewPortfolioMenu'
 
-import { ActionType, PortfolioContext } from '../../../context'
+import { PortfolioContext } from '../../../context'
 
 export const Header = () => {
     const [topCoins, setTopCoins] = useState<CoinInfo[]>()
@@ -33,12 +33,14 @@ export const Header = () => {
     }
 
     useEffect(() => {
-        setPrevPrice(getPrice(context.state.prevState))
-    }, [context.state.prevState])
+        console.log(context.prevState instanceof Array)
+        setPrevPrice(getPrice(context.prevState))
+    }, [context.prevState])
 
     useEffect(() => {
-        setCurrPrice(getPrice(context.state.currState))
-    }, [context.state.currState])
+        console.log(context.currState instanceof Array)
+        setCurrPrice(getPrice(context.currState))
+    }, [context.currState])
 
     const deltaValue = currPrice - prevPrice
     const deltaPercent = ((currPrice - prevPrice) / prevPrice) * 100
@@ -63,23 +65,29 @@ export const Header = () => {
                 <div className={styles.portfolioBlock__labels}>
                     <span>Portfolio Info</span>
                     <span>
-                        {currPrice.toFixed(2)} USD
-                        {deltaValue !== 0 &&
-                            ` ${deltaValue > 0 ? '+' : '-'} ${Math.abs(
-                                deltaValue
-                            ).toFixed(2)} (${deltaPercent.toFixed(2)} %)`}
+                        <span>{currPrice.toFixed(2)} USD</span>
+                        <span
+                            className={
+                                styles[
+                                deltaValue > 0
+                                    ? 'portfolioBlock__priceDiff_pos'
+                                    : 'portfolioBlock__priceDiff_neg'
+                                ]
+                            }
+                        >
+                            {deltaValue !== 0 &&
+                                ` ${deltaValue > 0 ? '+' : '-'} ${Math.abs(
+                                    deltaValue
+                                ).toFixed(2)} (${Math.abs(deltaPercent).toFixed(2)} %)`}
+                        </span>
                     </span>
                 </div>
                 <div className={styles.portfolioBlock__controls}>
                     <Button onClick={() => setIsMenuVisible(true)}>
                         More Info
                     </Button>
-                    <Button
-                        onClick={() =>
-                            context.dispatch({ type: ActionType.UpdatePortfolio })
-                        }
-                    >
-                        Update
+                    <Button onClick={() => context.refreshPriceDiff()}>
+                        Refresh Diff
                     </Button>
                 </div>
             </div>

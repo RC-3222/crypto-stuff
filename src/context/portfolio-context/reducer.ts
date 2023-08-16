@@ -2,9 +2,9 @@ import { PortfolioItem } from '../../types'
 
 export enum ActionType {
     Init = 'Init',
-    UpdatePortfolio = 'updatePortfolio',
-    AddItem = 'addItem',
-    RemoveItem = 'addItem'
+    UpdateCurrState = 'UpdateCurrState',
+    AddItem = 'AddItem',
+    RemoveItem = 'RemoveItem',
 }
 
 type Action = {
@@ -15,14 +15,13 @@ type Action = {
 export const PortfolioReducer = (state: any, action: Action) => {
     switch (action.type) {
         case ActionType.Init: {
+            console.log(action.payload)
             return { ...action.payload }
         }
-        case ActionType.UpdatePortfolio: {
-            localStorage.setItem('prevState', JSON.stringify(state.currState))
-            return {
-                currState: state.currState,
-                prevState: [...state.currState],
-            }
+        case ActionType.UpdateCurrState: {
+            const updatedState = { ...state, currState: action.payload }
+            //localStorage.setItem('prevState', JSON.stringify(action.payload))
+            return updatedState
         }
         case ActionType.AddItem: {
             let newState
@@ -37,7 +36,6 @@ export const PortfolioReducer = (state: any, action: Action) => {
                     return item === existingItem
                         ? {
                             ...existingItem,
-                            priceUsd: action.payload.priceUsd,
                             amount: item.amount + action.payload.amount,
                         }
                         : item
@@ -50,11 +48,16 @@ export const PortfolioReducer = (state: any, action: Action) => {
         }
         case ActionType.RemoveItem: {
             const currState = state.currState as PortfolioItem[]
+            console.log(currState)
             const neededItem = currState.find(
                 (item: PortfolioItem) => item.id === action.payload
             )!
 
+            // not very likely to happen, but still
+            if (!neededItem) return
+
             const newState = currState.filter((item) => item !== neededItem)
+            console.log(newState)
 
             // since removing an item is also an update
             localStorage.setItem('prevState', JSON.stringify(newState))

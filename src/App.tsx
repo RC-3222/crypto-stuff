@@ -5,8 +5,16 @@ import { RoutePath } from './enums'
 import { MainPage } from './pages/main-page'
 import { InfoPage } from './pages/info-page'
 import { GeneralLayout } from './components/general-layout'
+import { useContext, useEffect } from 'react'
+import { PortfolioContext } from './context'
 
 export const App = () => {
+    const context = useContext(PortfolioContext)
+    useEffect(() => {
+        context.init()
+        // eslint-disable-next-line
+    }, [])
+
     return (
         <HashRouter>
             <Routes>

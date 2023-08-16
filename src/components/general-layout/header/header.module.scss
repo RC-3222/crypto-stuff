@@ -1,3 +1,5 @@
+@use '../../../scss/variables' as *;
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -8,7 +10,7 @@
     gap: min(3rem, 6%);
     border-bottom: 2px solid currentColor;
 
-    @media (max-width: 490px) {
+    @media (max-width: 640px) {
         flex-direction: column;
 
         gap: 1.5rem;
@@ -79,5 +81,15 @@
         justify-content: center;
         width: 100%;
         gap: min(1rem, 5%);
+    }
+
+    &__priceDiff {
+        &_neg {
+            color: $clr--danger;
+        }
+
+        &_pos {
+            color: $clr--green;
+        }
     }
 }
