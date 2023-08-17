@@ -4,7 +4,7 @@ import { PortfolioItem } from '../../types'
 /** Update data for the specified (existing) state
  *
  * @param prevState state to update
- * @returns updated state
+ * @returns  a promise that resolves to an updated state
  */
 export const getCurrState = async (prevState: PortfolioItem[]) => {
     const currState = new Array<PortfolioItem>()
@@ -44,7 +44,7 @@ export const getPrevState = () => {
  *
  * @param id id of the coin
  * @param amount amount to add
- * @returns info about selected coin (or null, if somehow could't get any)
+ * @returns a promise that resolves to an info about selected coin (or null, if somehow could't get any)
  */
 export const getCoinPortfolioInfo = async (id: string, amount: number) => {
     const coinData = await getCoinInfo(id)

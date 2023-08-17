@@ -5,4 +5,4 @@ export const ITEMS_PER_PAGE = 15
 export const TOP_SIZE = 3
 
 /** Base API route  */
-export const API_BASE = 'https://api.coincap.io/v2/assets'
+export const API_BASE = 'https://api.coincap.io/v2'

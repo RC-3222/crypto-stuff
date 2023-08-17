@@ -84,10 +84,8 @@ export const PortfolioContextProvider = ({ children }: PropsWithChildren) => {
     const removeItem = async (id: string) => {
         setIsUpdating(true)
 
-        // update existing data
         await refreshPriceDiff(true)
 
-        // remove item from updated data
         dispatch({ type: ActionType.RemoveItem, payload: id })
 
         setIsUpdating(false)

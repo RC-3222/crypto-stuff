@@ -10,7 +10,7 @@ import { HistoryItem } from '../types/history'
  */
 export const getCoinInfo = async (id: string) => {
     try {
-        const res = await fetch(`${API_BASE}/${id}`)
+        const res = await fetch(`${API_BASE}/assets/${id}`)
 
         if (!res.ok) throw new Error(`Could't get any coin info (id = ${id})`)
 
@@ -22,6 +22,7 @@ export const getCoinInfo = async (id: string) => {
         return null
     }
 }
+
 /**
  * Get coin price history by coin id
  *
@@ -30,7 +31,7 @@ export const getCoinInfo = async (id: string) => {
  */
 export const getCoinPriceHistory = async (id: string) => {
     try {
-        const res = await fetch(`${API_BASE}/${id}/history?interval=d1`)
+        const res = await fetch(`${API_BASE}/assets/${id}/history?interval=d1`)
 
         if (!res.ok)
             throw new Error(
@@ -55,7 +56,7 @@ export const getCoinPriceHistory = async (id: string) => {
 export const getPageData = async (pageNum: number) => {
     try {
         const res = await fetch(
-            `${API_BASE}?limit=${ITEMS_PER_PAGE}&offset=${
+            `${API_BASE}/assets?limit=${ITEMS_PER_PAGE}&offset=${
                 ITEMS_PER_PAGE * pageNum
             }`
         )
@@ -75,11 +76,11 @@ export const getPageData = async (pageNum: number) => {
 /**
  * Get info about most popular coins available
  *
- * @returns an array of coin infos (can be empty)
+ * @returns a promise that resolves to an array of coin infos (can be empty)
  */
 export const getPopularCoins = async () => {
     try {
-        const res = await fetch(`${API_BASE}?limit=${TOP_SIZE}`)
+        const res = await fetch(`${API_BASE}/assets?limit=${TOP_SIZE}`)
 
         if (!res.ok) throw new Error(`Could't get any data about popular coins`)
 

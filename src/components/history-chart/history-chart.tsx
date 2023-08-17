@@ -20,7 +20,7 @@ const formatXAxis = (tickItem: number) => {
 
 export const HistoryChart = ({ data }: HistoryChartProps) => {
     return (
-        <ResponsiveContainer width="80%" height={460}>
+        <ResponsiveContainer width="90%" height={460}>
             <AreaChart data={data} className={styles.chart}>
                 {' '}
                 <XAxis dataKey="time" tickFormatter={formatXAxis} />

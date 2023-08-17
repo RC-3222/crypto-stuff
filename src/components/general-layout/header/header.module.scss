@@ -39,12 +39,12 @@
 
 .topCoin {
     font-weight: 400;
-    //border-bottom: 1px solid currentColor;
 
     &#{Container} {
+        list-style: none;
+
         display: flex;
         width: 100%;
-        //width: min(450px, 50%);
         gap: min(1rem, 3%);
         flex-wrap: wrap;
 

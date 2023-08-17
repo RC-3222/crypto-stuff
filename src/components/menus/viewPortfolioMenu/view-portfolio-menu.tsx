@@ -23,7 +23,7 @@ export const ViewPorfolioMenu = ({ onHide }: AddCoinMenuProps) => {
             {!context.currState.length && !context.isUpdating && (
                 <h3>There are no coins in your portfolio yet.</h3>
             )}
-            {context.currState.length && !context.isUpdating && (
+            {!!context.currState.length && !context.isUpdating && (
                 <ul className={styles.list}>
                     {context.currState.map((item) => (
                         <li key={item.id} className={styles.list__item}>
