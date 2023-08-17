@@ -14,6 +14,10 @@
     }
 }
 
+.error {
+    color: $clr--danger;
+}
+
 .input {
     border: 1px solid $clr--black;
     border-radius: 3px;
@@ -38,6 +42,7 @@
         label {
             font-weight: 500;
         }
+
         align-items: center;
         justify-content: center;
     }

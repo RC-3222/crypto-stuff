@@ -6,35 +6,41 @@ import { HistoryChart } from '../../components/history-chart'
 import { HistoryItem } from '../../types/history'
 import { Button } from '../../components/common/button'
 import { AddCoinMenu } from '../../components/menus/addCoinMenu'
+import { getCoinPriceHistory, getCoinInfo } from '../../api'
+
+import styles from './info-page.module.scss'
+import { Loader } from '../../components/common/loader'
 
 export const InfoPage = () => {
     const params = useParams()
 
-    const [mainInfo, setMainInfo] = useState<CoinInfo>()
-    const [historyInfo, setHistoryInfo] = useState<HistoryItem[]>()
+    const [mainInfo, setMainInfo] = useState<CoinInfo | null>(null)
+    const [historyInfo, setHistoryInfo] = useState<HistoryItem[]>([])
 
     const [isMenuVisible, setIsMenuVisible] = useState(false)
 
-    const loadInfo = async () => {
-        const { data: mainData } = await fetch(
-            `https://api.coincap.io/v2/assets/${params.coinId}`
-        ).then((res) => res.json())
-        setMainInfo(mainData)
+    const [isLoading, setIsLoading] = useState(true)
 
-        const { data: historyData } = await fetch(
-            `https://api.coincap.io/v2/assets/${params.coinId}/history?interval=d1`
-        ).then((res) => res.json())
-        setHistoryInfo(historyData)
+    const loadInfo = async () => {
+        setIsLoading(true)
+        const coinId = params.coinId as string
+        const [coinInfo, coinHistory] = await Promise.all([
+            getCoinInfo(coinId),
+            getCoinPriceHistory(coinId),
+        ])
+        setMainInfo(coinInfo)
+        setHistoryInfo(coinHistory)
+        setIsLoading(false)
     }
 
     useEffect(() => {
         loadInfo()
-        // eslint-disable-next-line 
     }, [])
 
     return (
         <>
-            {mainInfo && historyInfo && (
+            {isLoading && <Loader />}
+            {!isLoading && mainInfo && (
                 <>
                     <h2>{mainInfo?.name}</h2>
                     <h3>{`Price in USD: ${mainInfo?.priceUsd}`}</h3>
@@ -43,7 +49,9 @@ export const InfoPage = () => {
                         Add To Portfolio
                     </Button>
                     <h3>{`Price history (USD)`}</h3>
-                    <HistoryChart data={historyInfo} />
+                    {!!historyInfo.length && (
+                        <HistoryChart data={historyInfo} />
+                    )}
                     {isMenuVisible && (
                         <AddCoinMenu
                             coinToAdd={mainInfo}
@@ -51,6 +59,11 @@ export const InfoPage = () => {
                         ></AddCoinMenu>
                     )}
                 </>
+            )}
+            {!isLoading && !mainInfo && (
+                <div className={styles.noCoinInfo}>
+                    <h3>Couldn't get any info about the selected coin</h3>
+                </div>
             )}
         </>
     )

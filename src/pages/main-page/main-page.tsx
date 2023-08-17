@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
-import { ITEMS_PER_PAGE } from '../../constants'
 import { CoinInfo } from '../../types'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/common/button'
 
 import styles from './main-page.module.scss'
 import { CoinList } from '../../components/coin-list'
+import { Loader } from '../../components/common/loader'
+import { getPageData } from '../../api'
 
 export const MainPage = () => {
-    const [currentCoins, setCurrentCoins] = useState<CoinInfo[]>()
+    const [currentCoins, setCurrentCoins] = useState<CoinInfo[]>([])
+
+    const [isLoading, setIsLoading] = useState(true)
+
+    const [hasPrevPage, setHasPrevPage] = useState(false)
 
     const location = useLocation()
 
@@ -17,18 +22,18 @@ export const MainPage = () => {
     const [currPage, setCurrPage] = useState(0)
 
     const loadData = async (currPage: number) => {
-        try {
-            const { data } = await fetch(
-                `https://api.coincap.io/v2/assets?limit=${ITEMS_PER_PAGE}&offset=${
-                    ITEMS_PER_PAGE * currPage
-                }`
-            ).then((res) => res.json())
+        setIsLoading(true)
 
-            setCurrentCoins(data)
-        } catch (err) {
-            console.error(err)
-            setCurrentCoins([])
+        const pageData = await getPageData(currPage)
+
+        if (!pageData.length) {
+            const prevPageData = await getPageData(currPage)
+
+            setHasPrevPage(prevPageData.length > 0)
         }
+
+        setCurrentCoins(pageData)
+        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -43,28 +48,58 @@ export const MainPage = () => {
 
     return (
         <>
-            <h2>Available coins</h2>
-            {currentCoins && <CoinList items={currentCoins} />}
-            <div className={styles.paginationContainer}>
-                {currPage > 0 && (
-                    <Button onClick={() => navigate(`?page=${currPage - 1}`)}>
-                        Previous
-                    </Button>
-                )}
-                <span>{`${currPage + 1}`}</span>
-                <Button onClick={() => navigate(`?page=${currPage + 1}`)}>
-                    Next
-                </Button>
-            </div>
+            {isLoading && <Loader />}
+            {!isLoading && !!currentCoins.length && (
+                <>
+                    <h2>Available coins</h2>
+                    <CoinList items={currentCoins} />
+                    <div className={styles.paginationContainer}>
+                        {currPage > 0 && (
+                            <Button
+                                onClick={() =>
+                                    navigate(`?page=${currPage - 1}`)
+                                }
+                            >
+                                Previous
+                            </Button>
+                        )}
+                        <span>{`${currPage + 1}`}</span>
+                        <Button
+                            onClick={() => navigate(`?page=${currPage + 1}`)}
+                        >
+                            Next
+                        </Button>
+                    </div>
+                </>
+            )}
+            {!isLoading && !currentCoins.length && (
+                <div className={styles.noCoins}>
+                    <h3>No coins here...</h3>
+                    {hasPrevPage ? (
+                        <>
+                            <p>But there are some on the previous page.</p>
+                            <Button
+                                onClick={() =>
+                                    navigate(`?page=${currPage - 1}`)
+                                }
+                            >
+                                To previous page
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <p>
+                                And it looks like you got to here by some
+                                external way, so the only thing we can suggest
+                                you is to go back to initial page.
+                            </p>
+                            <Button onClick={() => navigate(`?page=${0}`)}>
+                                To initial page
+                            </Button>
+                        </>
+                    )}
+                </div>
+            )}
         </>
     )
 }
-
-//<span>{`${currPage + 1} of ${totalPages}`}</span>
-//<ul>{currentCoins && currentCoins.map((item)=><li key={item.id}>{`${item.name} - ${(+item.priceUsd).toFixed(2)}`}</li>)}</ul>
-//const [totalPages, setTotalPages] = useState(0)
-/*if (!totalPages) {
-            const {data:totalData} = await fetch(`https://api.coincap.io/v2/assets`).then((res)=>res.json())
-            //console.log(totalData.length)
-            setTotalPages(Math.ceil(totalData.length/ITEMS_PER_PAGE))
-        }*/

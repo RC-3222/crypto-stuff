@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useRef } from 'react'
+import { FormEvent, useContext, useRef, useState } from 'react'
 import { Modal } from '../../common/modal'
 import { Button } from '../../common/button'
 import { CoinInfo } from '../../../types'
@@ -12,6 +12,7 @@ type AddCoinMenuProps = {
 }
 
 export const AddCoinMenu = ({ onHide, coinToAdd }: AddCoinMenuProps) => {
+    const [errorMessage, setErrorMessage] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
 
     const context = useContext(PortfolioContext)
@@ -20,15 +21,12 @@ export const AddCoinMenu = ({ onHide, coinToAdd }: AddCoinMenuProps) => {
         event.preventDefault()
 
         const numVal = Number(inputRef.current?.value)
-        if (!numVal || numVal < 0) return
+        if (!numVal || numVal < 0) {
+            setErrorMessage('The value must be a positive number')
+            return
+        }
 
-        context.addItem({
-            id: coinToAdd.id,
-            name: coinToAdd.name,
-            priceUsd: +coinToAdd.priceUsd,
-            amount: numVal,
-        })
-
+        context.addItem(coinToAdd.id, numVal)
         onHide()
     }
 
@@ -45,6 +43,9 @@ export const AddCoinMenu = ({ onHide, coinToAdd }: AddCoinMenuProps) => {
                         ref={inputRef}
                         placeholder="value..."
                     ></input>
+                    {!!errorMessage && (
+                        <span className={styles.error}>{errorMessage}</span>
+                    )}
                 </div>
                 <Button type="submit">Add</Button>
             </form>

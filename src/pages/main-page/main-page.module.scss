@@ -7,3 +7,18 @@
     justify-content: center;
     gap: min(3%, 1.5rem);
 }
+
+.noCoins {
+    width: min(520px, 100%);
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    align-items: center;
+
+    button {
+        width: fit-content;
+    }
+}

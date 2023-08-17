@@ -1,6 +1,7 @@
-import { PortfolioItem } from "../../types"
+import { getCoinInfo } from '../../api'
+import { PortfolioItem } from '../../types'
 
-/** Update data for the specified existing state
+/** Update data for the specified (existing) state
  *
  * @param prevState state to update
  * @returns updated state
@@ -11,21 +12,18 @@ export const getCurrState = async (prevState: PortfolioItem[]) => {
     if (!prevState.length) return currState
 
     for (const item of prevState) {
-        try {
-            const { data } = await fetch(
-                `https://api.coincap.io/v2/assets/${item.id}`
-            ).then((res) => res.json())
-            const newItem = {
-                id: data.id,
-                name: data.name,
-                amount: +item.amount,
-                priceUsd: +data.priceUsd,
-            }
+        const coinData = await getCoinInfo(item.id)
 
-            currState.push(newItem)
-        } catch (err) {
-            throw err
+        if (!coinData) continue
+
+        const newItem = {
+            id: coinData.id,
+            name: coinData.name,
+            amount: +item.amount,
+            priceUsd: +coinData.priceUsd,
         }
+
+        currState.push(newItem)
     }
 
     return currState
@@ -40,4 +38,25 @@ export const getPrevState = () => {
         ? JSON.parse(localStorage.prevState)
         : new Array<PortfolioItem>()
     return prevState
+}
+
+/** Get info about the selected coin that's needed for adding it to the portfolio
+ *
+ * @param id id of the coin
+ * @param amount amount to add
+ * @returns info about selected coin (or null, if somehow could't get any)
+ */
+export const getCoinPortfolioInfo = async (id: string, amount: number) => {
+    const coinData = await getCoinInfo(id)
+
+    if (!coinData) return null
+
+    const newPortfolioItemInfo = {
+        id: id,
+        name: coinData.name,
+        priceUsd: +coinData.priceUsd,
+        amount: amount,
+    }
+
+    return newPortfolioItemInfo
 }

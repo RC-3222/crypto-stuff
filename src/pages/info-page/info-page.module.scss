@@ -1,0 +1,10 @@
+.noCoinInfo {
+    width: min(520px, 100%);
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    align-items: center;
+}

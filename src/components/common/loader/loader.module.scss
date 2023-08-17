@@ -1,0 +1,30 @@
+@use '../../../scss/variables' as *;
+
+.spinner {
+    width: 100%;
+    overflow: hidden;
+    height: max(420px, 100%);
+
+    display: grid;
+    place-content: center;
+
+    &::after {
+        content: ' ';
+        width: min(64px, min(50vh, 50vw));
+        height: min(64px, min(50vh, 50vw));
+        border-radius: 50%;
+        border: 6px solid $clr--green;
+        border-color: $clr--green transparent $clr--green transparent;
+        animation: spinner 1.2s linear infinite;
+    }
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -12,7 +12,6 @@ export const App = () => {
     const context = useContext(PortfolioContext)
     useEffect(() => {
         context.init()
-        // eslint-disable-next-line
     }, [])
 
     return (
