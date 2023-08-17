@@ -11,6 +11,12 @@
 html {
     min-width: 100vw;
     min-height: 100vh;
+    background: linear-gradient(
+        90deg,
+        rgba(16, 78, 33, 1) 0%,
+        rgba(13, 100, 47, 1) 50%,
+        rgba(16, 78, 33, 1) 100%
+    );
 }
 
 body {
@@ -22,6 +28,7 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: transparent;
 }
 
 *::-webkit-scrollbar {

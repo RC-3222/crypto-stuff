@@ -42,13 +42,19 @@ export const InfoPage = () => {
             {isLoading && <Loader />}
             {!isLoading && mainInfo && (
                 <>
-                    <h2>{mainInfo?.name}</h2>
-                    <h3>{`Price in USD: ${mainInfo?.priceUsd}`}</h3>
-                    <h4>{`Available: ${mainInfo?.supply}`}</h4>
+                    <h2 className={styles.title}>{mainInfo?.name}</h2>
+                    <h3
+                        className={styles.price}
+                    >{`Current price (USD): ${mainInfo?.priceUsd}`}</h3>
+                    <h4
+                        className={styles.supply}
+                    >{`Available: ${mainInfo?.supply}`}</h4>
                     <Button onClick={() => setIsMenuVisible(true)}>
                         Add To Portfolio
                     </Button>
-                    <h3>{`Price history (USD)`}</h3>
+                    <h3
+                        className={styles.historyTitle}
+                    >{`Price history (USD)`}</h3>
                     {!!historyInfo.length && (
                         <HistoryChart data={historyInfo} />
                     )}

@@ -9,6 +9,8 @@
     flex-wrap: wrap;
     gap: min(3rem, 6%);
     border-bottom: 2px solid currentColor;
+    background: $clr--white;
+    box-shadow: $generic-shadow;
 
     @media (max-width: 640px) {
         flex-direction: column;

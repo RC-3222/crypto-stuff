@@ -51,7 +51,7 @@ export const MainPage = () => {
             {isLoading && <Loader />}
             {!isLoading && !!currentCoins.length && (
                 <>
-                    <h2>Available coins</h2>
+                    <h2 className={styles.title}>Available coins</h2>
                     <CoinList items={currentCoins} />
                     <div className={styles.paginationContainer}>
                         {currPage > 0 && (

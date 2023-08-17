@@ -33,7 +33,7 @@ export const Header = () => {
         setIsLoadingTopData(false)
     }
 
-    const [isLoadingTopData, setIsLoadingTopData] = useState(false)
+    const [isLoadingTopData, setIsLoadingTopData] = useState(true)
 
     useEffect(() => {
         setPrevPrice(getPrice(context.prevState))

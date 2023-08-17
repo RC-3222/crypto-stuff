@@ -1,3 +1,5 @@
+@use '../../scss/variables' as *;
+
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -7,5 +9,15 @@
     gap: 2rem;
 
     width: min(100vw, 960px);
-    margin: 20px auto;
+    margin: 0;
+    background: $clr--white;
+
+    box-shadow: $generic-shadow;
+
+    padding: 20px 15px;
+
+    @media (min-width: 961px) {
+        margin: 20px auto;
+        border-radius: 10px;
+    }
 }

@@ -1,4 +1,4 @@
-@use '../../scss/variables' as *;
+@use '../../scss/mixins' as *;
 
 .paginationContainer {
     display: flex;
@@ -21,4 +21,8 @@
     button {
         width: fit-content;
     }
+}
+
+.title {
+    @include h2;
 }

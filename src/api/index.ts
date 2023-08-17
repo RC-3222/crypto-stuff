@@ -6,7 +6,7 @@ import { HistoryItem } from '../types/history'
  * Get info about the coin by id
  *
  * @param id id of the coin
- * @returns info about the coin (or null, if could't get any)
+ * @returns a promise that resolves to an info about the coin (or null, if could't get any)
  */
 export const getCoinInfo = async (id: string) => {
     try {
@@ -22,12 +22,11 @@ export const getCoinInfo = async (id: string) => {
         return null
     }
 }
-
 /**
  * Get coin price history by coin id
  *
  * @param id id of the coin
- * @returns an array of history entries (can be empty)
+ * @returns a promise that resolves to an array of history entries (can be empty)
  */
 export const getCoinPriceHistory = async (id: string) => {
     try {
@@ -51,7 +50,7 @@ export const getCoinPriceHistory = async (id: string) => {
  * Get data for the specified page
  *
  * @param pageNum page number
- * @returns an array of coin infos (can be empty)
+ * @returns a promise that resolves to an array of coin infos (can be empty)
  */
 export const getPageData = async (pageNum: number) => {
     try {
