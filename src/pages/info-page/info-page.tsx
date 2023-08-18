@@ -46,9 +46,11 @@ export const InfoPage = () => {
                     <h3
                         className={styles.price}
                     >{`Current price (USD): ${mainInfo?.priceUsd}`}</h3>
-                    <h4
-                        className={styles.avgPrice}
-                    >{`Average price in the last 24 hours (USD): ${mainInfo?.vwap24Hr}`}</h4>
+                    {!!mainInfo?.vwap24Hr && (
+                        <h4
+                            className={styles.avgPrice}
+                        >{`Average price in the last 24 hours (USD): ${mainInfo?.vwap24Hr}`}</h4>
+                    )}
                     <h4
                         className={styles.supply}
                     >{`Available for trading: ${mainInfo?.supply}`}</h4>
