@@ -21,6 +21,7 @@ export const AddCoinMenu = ({ onHide, coinToAdd }: AddCoinMenuProps) => {
         event.preventDefault()
 
         const numVal = Number(inputRef.current?.value)
+
         if (!numVal || numVal < 0) {
             setErrorMessage('The value must be a positive number')
             return
@@ -34,9 +35,7 @@ export const AddCoinMenu = ({ onHide, coinToAdd }: AddCoinMenuProps) => {
         <Modal onHide={onHide}>
             <form className={styles.formContainer} onSubmit={submitHandler}>
                 <div className={styles.inputContainer}>
-                    <label className={styles.inputLabel} htmlFor={coinToAdd.id}>
-                        Value to add:
-                    </label>
+                    <label htmlFor={coinToAdd.id}>Value to add:</label>
                     <input
                         className={styles.input}
                         id={coinToAdd.id}

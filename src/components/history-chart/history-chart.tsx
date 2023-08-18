@@ -8,8 +8,6 @@ import {
 } from 'recharts'
 import { HistoryItem } from '../../types/history'
 
-import styles from './history-chart.module.scss'
-
 type HistoryChartProps = {
     data: HistoryItem[]
 }
@@ -20,9 +18,16 @@ const formatXAxis = (tickItem: number) => {
 
 export const HistoryChart = ({ data }: HistoryChartProps) => {
     return (
-        <ResponsiveContainer width="90%" height={460}>
-            <AreaChart data={data} className={styles.chart}>
-                {' '}
+        <ResponsiveContainer width="95%" height={460}>
+            <AreaChart
+                data={data}
+                margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                }}
+            >
                 <XAxis dataKey="time" tickFormatter={formatXAxis} />
                 <YAxis />
                 <CartesianGrid strokeDasharray="3 3" />

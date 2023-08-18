@@ -4,26 +4,12 @@ import { PortfolioItem } from '../../types'
 import { getPrevState, getCurrState, getCoinPortfolioInfo } from './utils'
 
 type InitialPortfolioState = {
-    /** Current portfolio state */
     currState: PortfolioItem[]
-    /** Previous portfolio state */
     prevState: PortfolioItem[]
-    /** Init porfolio state */
     init: () => Promise<void>
-    /** A flag to check if the portfolio data is currently updating */
     isUpdating: boolean
-    /** Refresh price difference between current and previous portfolio states (by updating the current one) */
     refreshPriceDiff: () => Promise<void>
-    /** Add a new item to the portfolio (with full state update)
-     *
-     * @param id id of an item to add (just the id because all other info about the needed item is loaded again (to make sure its as up to date as possible))
-     * @param amount amount to add
-     */
     addItem: (id: string, amount: number) => Promise<void>
-    /** Remove an item from the portfolio (with full state update)
-     *
-     * @param id id of an item to remove
-     */
     removeItem: (id: string) => Promise<void>
 }
 

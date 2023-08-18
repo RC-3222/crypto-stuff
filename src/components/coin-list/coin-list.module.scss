@@ -1,4 +1,6 @@
-.list {
+@use '../../scss/variables' as *;
+
+.coinList {
     margin: 0;
     padding: 0;
     display: flex;
@@ -11,4 +13,9 @@
     width: 100%;
 
     list-style: none;
+
+    li:not(:last-child) {
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 0.5rem;
+    }
 }

@@ -14,11 +14,13 @@ export const Coin = ({ item }: CoinProps) => {
     const [isMenuVisible, setIsMenuVisible] = useState(false)
 
     return (
-        <li className={styles.li}>
+        <li className={styles.coinItem}>
             <Link to={`/coins/${item.id}`}>
-                <span>{`${item.name} - ${(+item.priceUsd).toFixed(
-                    2
-                )} USD`}</span>
+                <span>{`${item.name} - ${
+                    +item.priceUsd >= 0.01
+                        ? (+item.priceUsd).toFixed(2)
+                        : 'less than 0.01'
+                } USD`}</span>
             </Link>
             <Button
                 onClick={() => {

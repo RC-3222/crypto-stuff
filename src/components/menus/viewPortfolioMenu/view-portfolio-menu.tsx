@@ -32,9 +32,11 @@ export const ViewPorfolioMenu = ({ onHide }: AddCoinMenuProps) => {
                                     {item.name}
                                 </span>
                                 <span className={styles.item__info__price}>
-                                    {`${item.priceUsd.toFixed(2)} USD * ${
-                                        item.amount
-                                    }`}
+                                    {`${
+                                        item.priceUsd >= 0.01
+                                            ? item.priceUsd.toFixed(2)
+                                            : 'less than 0.01'
+                                    } USD * ${item.amount}`}
                                 </span>
                             </div>
                             <Button onClick={() => removeItemHandler(item.id)}>

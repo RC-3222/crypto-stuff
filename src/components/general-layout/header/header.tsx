@@ -43,8 +43,10 @@ export const Header = () => {
         setCurrPrice(getPrice(context.currState))
     }, [context.currState])
 
-    const deltaValue = currPrice - prevPrice
-    const deltaPercent = ((currPrice - prevPrice) / prevPrice) * 100
+    const priceDiffValue = currPrice - prevPrice
+    const priceDiffPercent = Math.abs(
+        ((currPrice - prevPrice) / prevPrice) * 100
+    )
 
     useEffect(() => {
         loadTopData()
@@ -58,9 +60,8 @@ export const Header = () => {
                 {!!topCoins.length && !isLoadingTopData && (
                     <ul className={styles.topCoinContainer}>
                         {topCoins.map((item) => (
-                            <li className={styles.topCoin} key={item.id}>{`${
-                                item.name
-                            } - ${(+item.priceUsd).toFixed(2)} USD`}</li>
+                            <li className={styles.topCoin} key={item.id}>{`${item.name
+                                } - ${(+item.priceUsd).toFixed(2)} USD`}</li>
                         ))}
                     </ul>
                 )}
@@ -77,18 +78,17 @@ export const Header = () => {
                             <span
                                 className={
                                     styles[
-                                        deltaValue > 0
-                                            ? 'portfolioBlock__priceDiff_pos'
-                                            : 'portfolioBlock__priceDiff_neg'
+                                    priceDiffValue > 0
+                                        ? 'portfolioBlock__priceDiff_pos'
+                                        : 'portfolioBlock__priceDiff_neg'
                                     ]
                                 }
                             >
-                                {deltaValue !== 0 &&
-                                    ` ${deltaValue > 0 ? '+' : '-'} ${Math.abs(
-                                        deltaValue
-                                    ).toFixed(2)} (${Math.abs(
-                                        deltaPercent
-                                    ).toFixed(2)} %)`}
+                                {priceDiffValue !== 0 &&
+                                    ` ${priceDiffValue > 0 ? '+' : '-'
+                                    } ${Math.abs(priceDiffValue).toFixed(
+                                        2
+                                    )} (${priceDiffPercent.toFixed(2)} %)`}
                             </span>
                         </span>
                     )}
@@ -98,7 +98,7 @@ export const Header = () => {
                         More Info
                     </Button>
                     <Button onClick={() => context.refreshPriceDiff()}>
-                        Refresh Diff
+                        Refresh
                     </Button>
                 </div>
             </div>

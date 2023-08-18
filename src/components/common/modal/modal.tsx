@@ -2,8 +2,6 @@ import { PropsWithChildren, useEffect } from 'react'
 import styles from './modal.module.scss'
 import { createPortal } from 'react-dom'
 
-import closeIcon from '../../../assets/close-icon.svg'
-
 type ModalProps = PropsWithChildren & {
     onHide: () => void
 }
@@ -21,7 +19,7 @@ export const Modal = ({ children, onHide }: ModalProps) => {
             <div className={styles.backdrop}></div>
             <div className={styles.container}>
                 <button className={styles.closeIcon} onClick={onHide}>
-                    <img src={closeIcon} alt="close-icon" />
+                    <img src="close-icon.svg" alt="close-icon" />
                 </button>
                 {children}
             </div>

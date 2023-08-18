@@ -5,4 +5,5 @@ export type CoinInfo = {
     symbol: string
     name: string
     priceUsd: string
+    vwap24Hr: string
 }
