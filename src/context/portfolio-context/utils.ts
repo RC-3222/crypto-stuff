@@ -1,5 +1,6 @@
 import { getCoinInfo } from '../../api'
 import { PortfolioItem } from '../../types'
+import { coinNameStr } from '../../utils'
 
 export const getCurrState = async (prevState: PortfolioItem[]) => {
     const currState = new Array<PortfolioItem>()
@@ -13,7 +14,7 @@ export const getCurrState = async (prevState: PortfolioItem[]) => {
 
         const newItem = {
             id: coinData.id,
-            name: coinData.name,
+            name: coinNameStr(coinData.name, coinData.symbol),
             amount: +item.amount,
             priceUsd: +coinData.priceUsd,
         }
@@ -38,7 +39,7 @@ export const getCoinPortfolioInfo = async (id: string, amount: number) => {
 
     const newPortfolioItemInfo = {
         id: id,
-        name: coinData.name,
+        name: coinNameStr(coinData.name, coinData.symbol),
         priceUsd: +coinData.priceUsd,
         amount: amount,
     }

@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import { CoinInfo, PortfolioItem } from '../../../types'
 
 import { Button } from '../../common/button'
-import { ViewPorfolioMenu } from '../../menus/viewPortfolioMenu'
+import { ViewPorfolioMenu } from '../../menus/view-portfolio-menu'
 
 import { PortfolioContext } from '../../../context'
 import { getPopularCoins } from '../../../api'
 
 import styles from './header.module.scss'
+import { coinNameStr, valueStr } from '../../../utils'
 
 export const Header = () => {
     const [topCoins, setTopCoins] = useState<CoinInfo[]>([])
@@ -43,10 +44,22 @@ export const Header = () => {
         setCurrPrice(getPrice(context.currState))
     }, [context.currState])
 
-    const priceDiffValue = currPrice - prevPrice
-    const priceDiffPercent = Math.abs(
-        ((currPrice - prevPrice) / prevPrice) * 100
+    const priceStyle = useMemo(
+        () =>
+            currPrice - prevPrice > 0
+                ? styles['portfolioBlock__priceDiff_pos']
+                : styles['portfolioBlock__priceDiff_neg'],
+        [currPrice, prevPrice]
     )
+
+    const priceStr = useMemo(() => {
+        const priceDiff = currPrice - prevPrice
+        if (!priceDiff) return ''
+
+        const priceDiffPercent = Math.abs(priceDiff / prevPrice)
+
+        return ` ${priceDiff > 0 ? '+' : '-'} ${Math.abs(priceDiff).toFixed(2)} (${priceDiffPercent.toFixed(2)} %)`
+    }, [currPrice, prevPrice])
 
     useEffect(() => {
         loadTopData()
@@ -60,8 +73,11 @@ export const Header = () => {
                 {!!topCoins.length && !isLoadingTopData && (
                     <ul className={styles.topCoinContainer}>
                         {topCoins.map((item) => (
-                            <li className={styles.topCoin} key={item.id}>{`${item.name
-                                } - ${(+item.priceUsd).toFixed(2)} USD`}</li>
+                            <li className={styles.topCoin} key={item.id}>
+                                <span>{coinNameStr(item.name, item.symbol)}</span>
+                                {' - '}
+                                <span>{valueStr(+item.priceUsd)} USD</span>
+                            </li>
                         ))}
                     </ul>
                 )}
@@ -75,21 +91,9 @@ export const Header = () => {
                     ) : (
                         <span>
                             <span>{currPrice.toFixed(2)} USD</span>
-                            <span
-                                className={
-                                    styles[
-                                    priceDiffValue > 0
-                                        ? 'portfolioBlock__priceDiff_pos'
-                                        : 'portfolioBlock__priceDiff_neg'
-                                    ]
-                                }
-                            >
-                                {priceDiffValue !== 0 &&
-                                    ` ${priceDiffValue > 0 ? '+' : '-'
-                                    } ${Math.abs(priceDiffValue).toFixed(
-                                        2
-                                    )} (${priceDiffPercent.toFixed(2)} %)`}
-                            </span>
+                            {priceStr && (
+                                <span className={priceStyle}>{priceStr}</span>
+                            )}
                         </span>
                     )}
                 </div>
@@ -102,11 +106,8 @@ export const Header = () => {
                     </Button>
                 </div>
             </div>
-
             {isMenuVisible && (
-                <ViewPorfolioMenu
-                    onHide={() => setIsMenuVisible(false)}
-                ></ViewPorfolioMenu>
+                <ViewPorfolioMenu onHide={() => setIsMenuVisible(false)} />
             )}
         </header>
     )

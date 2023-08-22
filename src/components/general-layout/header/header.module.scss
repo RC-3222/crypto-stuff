@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 1.5rem 4rem;
     width: 100%;
     flex-wrap: wrap;
     gap: min(3rem, 6%);
@@ -12,7 +12,7 @@
     background: $clr--white;
     box-shadow: $generic-shadow;
 
-    @media (max-width: 640px) {
+    @media (max-width: 1041px) {
         flex-direction: column;
 
         gap: 1.5rem;
@@ -28,7 +28,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: min(450px, 50%);
+    width: min(620px, 100%);
     gap: 1rem;
 
     & > span:first-child {

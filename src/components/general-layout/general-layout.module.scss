@@ -16,6 +16,11 @@
 
     padding: 20px 15px;
 
+    @media (max-width: 960px) {
+        min-height: 100%;
+        justify-content: start;
+    }
+
     @media (min-width: 961px) {
         margin: 20px auto;
         border-radius: 10px;

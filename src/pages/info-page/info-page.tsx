@@ -5,11 +5,12 @@ import { useState } from 'react'
 import { HistoryChart } from '../../components/history-chart'
 import { HistoryItem } from '../../types/history'
 import { Button } from '../../components/common/button'
-import { AddCoinMenu } from '../../components/menus/addCoinMenu'
+import { AddCoinMenu } from '../../components/menus/add-coin-menu'
 import { getCoinPriceHistory, getCoinInfo } from '../../api'
 
 import styles from './info-page.module.scss'
 import { Loader } from '../../components/common/loader'
+import { coinNameStr } from '../../utils'
 
 export const InfoPage = () => {
     const params = useParams()
@@ -42,7 +43,9 @@ export const InfoPage = () => {
             {isLoading && <Loader />}
             {!isLoading && mainInfo && (
                 <>
-                    <h2 className={styles.title}>{mainInfo?.name}</h2>
+                    <h2 className={styles.title}>
+                        {coinNameStr(mainInfo.name, mainInfo.symbol)}
+                    </h2>
                     <h3
                         className={styles.price}
                     >{`Current price (USD): ${mainInfo?.priceUsd}`}</h3>
